@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Codez;
 using Codez.Alphabets;
@@ -65,9 +66,31 @@ namespace Tests
             Assert.Equal(FailureReasonType.Stopped, result.Reason);
         }
 
+        [Fact]
+        public async Task Can_generate_character_unique_code()
+        {
+            var generator = new CodeGenerator(
+                alphabet: new ExclusiveStringAlphabet("abcdefg123456789")
+            );
+
+            var result = await generator.GenerateAsync(5);
+            
+            output.WriteLine(result);
+            
+            Assert.Equal(5, result.Length);
+
+            var allCharactersAreUnique = result.All(character => result.Count(current => current == character) == 1);
+            Assert.True(allCharactersAreUnique);          
+        }
+
         public class Predictable : IAlphabet
         {
-            public IReadOnlyList<char> Characters { get; } = new ReadOnlyCollection<char>(new[] {'A'});
+            public char Get(int index)
+            {
+                return 'A';
+            }
+
+            public int Count => 1;
         }
 
         public class Never : IUniqueness

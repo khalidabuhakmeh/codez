@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Codez.Alphabets
 {
     public interface IAlphabet
     {
-        IReadOnlyList<char> Characters { get; }        
+        char Get(int index);
+        int Count { get; }
     }
 }

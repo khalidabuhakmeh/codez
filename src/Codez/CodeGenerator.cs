@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Codez.Alphabets;
@@ -15,6 +17,7 @@ namespace Codez
         private readonly IRandomizer randomizer;
         private readonly IUniqueness uniqueness;
         private readonly IStopWords stopWords;
+        private readonly IReadOnlyList<IListener> listeners;
 
         public CodeGenerator(
             CodeGeneratorOptions options = null,
@@ -30,6 +33,17 @@ namespace Codez
             this.uniqueness = uniqueness ?? new NoUniqueness();
             this.stopWords = stopWords ?? new NoStopWords();
             this.options = new CodeGeneratorOptions();
+
+            listeners = new object[]
+                {
+                    this.alphabet,
+                    this.randomizer,
+                    this.uniqueness,
+                    this.stopWords
+                }
+                .Where(x => x is IListener)
+                .Cast<IListener>()
+                .ToList();
         }
 
         public async ValueTask<string> GenerateAsync(int length)
@@ -46,14 +60,17 @@ namespace Codez
         {
             var result = new CodeGeneratorResult();
             var sb = new StringBuilder();
-            var alphabetLength = alphabet.Characters.Count;
             
             for (var retry = 1; retry <= options.RetryLimit; retry++)
-            {                
+            {
+                await OnBeforeAttempt(new BeforeAttemptEvent(retry));
+
                 for (var i = 0; i < length; i++)
                 {
-                    var index = await randomizer.NextAsync(alphabetLength);
-                    var character = alphabet.Characters[index];
+                    var characterCount = alphabet.Count;
+                    var index = await randomizer.NextAsync(characterCount);
+                    var character = alphabet.Get(index);
+                    
                     sb.Append(character);
                 }
 
@@ -61,6 +78,8 @@ namespace Codez
 
                 result.Reason = FailureReasonType.None;
                 result.Retries = retry;
+
+                await OnAfterAttempt(new AfterAttemptEvent(result));
 
                 if (await stopWords.IsAllowedAsync(attempt))
                 {
@@ -72,7 +91,7 @@ namespace Codez
                     }
                     else
                     {
-                        result.Reason = FailureReasonType.Uniqueness;                        
+                        result.Reason = FailureReasonType.Uniqueness;                    
                     }
                 }
                 else
@@ -84,6 +103,18 @@ namespace Codez
             }
 
             return result;
+        }
+
+        private async Task OnBeforeAttempt(BeforeAttemptEvent @event)
+        {
+            var onBefore = listeners.Select(e => e.OnBeforeAttempt(@event));
+            await Task.WhenAll(onBefore);
+        }
+        
+        private async Task OnAfterAttempt(AfterAttemptEvent @event)
+        {
+            var onBefore = listeners.Select(e => e.OnAfterAttempt(@event));
+            await Task.WhenAll(onBefore);
         }
     }
 }
