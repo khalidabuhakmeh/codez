@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,14 +21,14 @@ namespace Codez.StopWords
             this.ignoreCase = ignoreCase;
         }
         
-        public async ValueTask<bool> IsAllowedAsync(string value)
+        public ValueTask<bool> IsAllowedAsync(string value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
             
             var comparison = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
             var found = words.Any(stop => value.IndexOf(value, comparison ) > -1);
 
-            return !found;
+            return new ValueTask<bool>(!found);
         }
     }
 }
