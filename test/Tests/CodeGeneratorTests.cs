@@ -24,7 +24,7 @@ namespace Tests
         public async Task Can_generate_a_code()        
         {
             const int length = 5;
-            var result = await sut.Generate(length);
+            var result = await sut.GenerateAsync(length);
                         
             output.WriteLine(result);
             
@@ -36,14 +36,14 @@ namespace Tests
         public async Task Can_hit_retry_limit_with_exception()
         {
             var generator = new CodeGenerator(uniqueness: new Never());
-            await Assert.ThrowsAsync<CodeGeneratorException>(async() => await generator.Generate(1));
+            await Assert.ThrowsAsync<CodeGeneratorException>(async() => await generator.GenerateAsync(1));
         }
         
         [Fact]
         public async Task Can_hit_retry_limit_with_boolean()
         {
             var generator = new CodeGenerator(uniqueness: new Never());
-            var result = await generator.TryGenerate(1);
+            var result = await generator.TryGenerateAsync(1);
             
             Assert.Null(result.Value);
             Assert.False(result.Success);
@@ -59,7 +59,7 @@ namespace Tests
                 uniqueness: new NoUniqueness()
             );
 
-            var result = await generator.TryGenerate(1);
+            var result = await generator.TryGenerateAsync(1);
             
             Assert.False(result.Success);
             Assert.Equal(FailureReasonType.Stopped, result.Reason);

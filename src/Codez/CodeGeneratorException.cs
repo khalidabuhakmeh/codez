@@ -1,12 +1,31 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace Codez
 {
     public class CodeGeneratorException : Exception
     {
-        public CodeGeneratorException(string message)
-            :base(message)
+        public CodeGeneratorResult Result { get; }
+
+        public CodeGeneratorException(CodeGeneratorResult result)
+            :base(BuildMessage(result))
         {
+            Result = result;
+
+        }
+
+        private static string BuildMessage(CodeGeneratorResult result)
+        {
+            switch (result.Reason)
+            {                
+                case FailureReasonType.Uniqueness:
+                    return $"Failed due to uniqueness after {result.Retries} attempts.";
+                case FailureReasonType.Stopped:
+                    return $"Failed due to stop words after {result.Retries} attempts.";
+                case FailureReasonType.None:
+                default:
+                    return "Unknown exception during code generation";
+            }
         }
     }
 }

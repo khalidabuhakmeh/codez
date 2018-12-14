@@ -32,17 +32,17 @@ namespace Codez
             this.options = new CodeGeneratorOptions();
         }
 
-        public async ValueTask<string> Generate(int length)
+        public async ValueTask<string> GenerateAsync(int length)
         {
-            var result = await TryGenerate(length);
+            var result = await TryGenerateAsync(length);
 
             if (result.Success)
                 return result.Value;
             
-            throw new CodeGeneratorException($"Reached Retry Limit of {options.RetryLimit}");
+            throw new CodeGeneratorException(result);
         }
 
-        public async ValueTask<CodeGeneratorResult> TryGenerate(int length)
+        public async ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
         {
             var result = new CodeGeneratorResult();
             var sb = new StringBuilder();
