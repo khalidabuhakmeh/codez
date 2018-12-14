@@ -15,5 +15,11 @@ namespace Codez.Alphabets
         }
         
         public IReadOnlyList<char> Characters { get; }
+        public char Get(int index)
+        {
+            return Characters[index];
+        }
+
+        public int Count => Characters.Count;
     }
 }

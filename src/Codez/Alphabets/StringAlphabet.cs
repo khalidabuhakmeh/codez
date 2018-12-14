@@ -13,6 +13,13 @@ namespace Codez.Alphabets
             Characters = new ReadOnlyCollection<char>(alphabet.ToCharArray());
         }
 
-        public IReadOnlyList<char> Characters { get; private set; }        
+        public IReadOnlyList<char> Characters { get; private set; }
+        
+        public virtual char Get(int index)
+        {
+            return Characters[index];
+        }
+
+        public virtual int Count => Characters.Count;
     }
 }
