@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0-preview.18571.3" />
+    </ItemGroup>
+
+</Project>
