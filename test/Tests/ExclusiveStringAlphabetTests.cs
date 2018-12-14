@@ -50,7 +50,7 @@ namespace Tests
                     for (int i = 0; i < 10; i++)
                     {
                         var index = await random.NextAsync(alphabet.Count);
-                        var character = alphabet.Get(index);
+                        _ = alphabet.Get(index);
                     }
                 }
             );
