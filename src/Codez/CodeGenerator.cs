@@ -27,12 +27,11 @@ namespace Codez
             IStopWords stopWords = null
         )
         {
-            this.options = options;
+            this.options = options ?? new CodeGeneratorOptions();
             this.alphabet = alphabet ?? new AsciiAlphabet();
             this.randomizer = randomizer ?? new RandomRandomizer();
             this.uniqueness = uniqueness ?? new NoUniqueness();
             this.stopWords = stopWords ?? new NoStopWords();
-            this.options = new CodeGeneratorOptions();
 
             listeners = new object[]
                 {
@@ -78,16 +77,14 @@ namespace Codez
 
                 result.Reason = FailureReasonType.None;
                 result.Retries = retry;
-
-                await OnAfterAttempt(new AfterAttemptEvent(result));
-
+                result.Value = null;
+               
                 if (await stopWords.IsAllowedAsync(attempt))
                 {
                     if (await uniqueness.IsUniqueAsync(attempt))
                     {
                         result.Value = attempt;
                         result.Success = true;
-                        return result;
                     }
                     else
                     {
@@ -97,6 +94,13 @@ namespace Codez
                 else
                 {
                     result.Reason = FailureReasonType.Stopped;
+                }
+                
+                await OnAfterAttempt(new AfterAttemptEvent(result));
+
+                if (result.Success)
+                {
+                    return result;
                 }
 
                 sb.Clear();

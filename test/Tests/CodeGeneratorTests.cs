@@ -83,6 +83,27 @@ namespace Tests
             Assert.True(allCharactersAreUnique);          
         }
 
+        [Fact]
+        public async Task Can_generate_no_repeating_codes()
+        {
+            var generator = new CodeGenerator(
+                new CodeGeneratorOptions { RetryLimit = int.MaxValue },
+                uniqueness: new InMemoryUniqueness(),
+                alphabet: new StringAlphabet("0123456789")
+            );
+
+            var results = new List<string>();
+
+            for (var i = 0; i < 5; i++)
+            {
+                var result = await generator.GenerateAsync(1);
+                output.WriteLine(result);
+                results.Add(result);              
+            }
+            
+            Assert.Equal(5, results.Count);
+        }
+
         public class Predictable : IAlphabet
         {
             public char Get(int index)
