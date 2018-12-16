@@ -4,7 +4,7 @@ Codez is a library designed to help ease the process of generating codes for you
 
 ## Getting Started
 
-> NuGet Coming Soon...
+> dotnet add package Codez
 
 ## CodeGenerator
 
