@@ -7,7 +7,7 @@ namespace Codez.Alphabets
 {
     public class ExclusiveStringAlphabet : StringAlphabet, IListener
     {
-        private List<char> used = new List<char>();
+        private readonly List<char> used = new List<char>();
         
         public ExclusiveStringAlphabet(string alphabet) 
             : base(alphabet)

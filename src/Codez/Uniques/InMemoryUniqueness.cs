@@ -5,8 +5,8 @@ namespace Codez.Uniques
 {
     public class InMemoryUniqueness : IUniqueness, IListener
     {
-        private HashSet<string> existing = new HashSet<string>();
-        
+        private readonly HashSet<string> existing = new HashSet<string>();
+
         public async ValueTask<bool> IsUniqueAsync(string value)
         {
             return !existing.Contains(value);
