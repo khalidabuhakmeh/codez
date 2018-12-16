@@ -34,6 +34,20 @@ namespace Tests
             Assert.Contains("_", result);
         }
 
+        [Fact]
+        public async Task Can_fail_to_transform()
+        {
+            var generator = new CodeGenerator(
+                alphabet: new StringAlphabet("0123456789"),
+                transformer: new ContainerNamesTransformer()
+            );
+
+            var result = await generator.TryGenerateAsync(1);
+            
+            Assert.False(result.Success);
+            Assert.Equal(FailureReasonType.Transform, result.Reason);
+        }
+
         public class ContainerNamesTransformer : ITransformer
         {
             /// <summary>
@@ -69,8 +83,17 @@ namespace Tests
                        
             public async ValueTask<CodeGeneratorResult> Transform(CodeGeneratorResult result)
             {
-                var adjective = adjectives[result.Value.First()];
-                var name = names[result.Value.Last()];
+                if (result.Value.Length != 2)
+                    return new CodeGeneratorResult
+                    {
+                        Value = null,
+                        Reason = FailureReasonType.Transform,
+                        Retries = result.Retries,
+                        Success = false
+                    };
+                
+                var adjective = adjectives[result.Value[0]];
+                var name = names[result.Value[1]];
                 
                 return new CodeGeneratorResult
                 {
