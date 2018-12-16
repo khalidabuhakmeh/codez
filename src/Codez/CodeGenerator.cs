@@ -100,20 +100,16 @@ namespace Codez
                     result.Reason = FailureReasonType.Stopped;
                 }
                 
+                if (transformer != null && result.Success)
+                {
+                    result = await transformer.Transform(result);
+                }
+                
                 await OnAfterAttempt(new AfterAttemptEvent(result));
 
                 if (result.Success)
                 {
-                    if (transformer != null)
-                    {
-                        result = await transformer.Transform(result);
-                    }
-                    
-                    // Can fail transformation
-                    if (result.Success)
-                    {
-                        return result;
-                    }
+                    return result;
                 }
 
                 sb.Clear();
