@@ -1,5 +1,3 @@
-using System.Diagnostics.Tracing;
-
 namespace Codez
 {
     public class CodeGeneratorResult
