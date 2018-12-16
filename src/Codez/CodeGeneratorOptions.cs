@@ -2,6 +2,11 @@ namespace Codez
 {
     public class CodeGeneratorOptions
     {
-        public int RetryLimit { get; set; } = 5;
+        public CodeGeneratorOptions()
+        {
+            RetryLimit = 5;
+        }
+        
+        public int RetryLimit { get; set; }
     }
 }
