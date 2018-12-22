@@ -17,6 +17,7 @@ The core of the library is the `CodeGenerator` class, which has two methods: `Ge
 - Uniqueness (`IUniqueness`)
 - Stop Words (`IStopWords`)
 - Options (`CodeGeneratorOptions`)
+- Transformers (`ITransformer`)
 
 Each dependency is explained in detail below. Codez also comes with some defaults out of the box if you don't want to customize anything.
 
