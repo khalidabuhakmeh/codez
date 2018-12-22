@@ -16,7 +16,7 @@ build_script:
 - ps: dotnet pack -c Release --version-suffix=$revision
 test: off
 artifacts:
-- path: *.nupkg
+- path: '**\*.nupkg'
   name: NuGet
 deploy:
 - provider: NuGet
