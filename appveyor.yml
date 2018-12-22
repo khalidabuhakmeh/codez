@@ -19,14 +19,6 @@ artifacts:
 - path: '**\*.nupkg'
   name: NuGet
 deploy:
-- provider: NuGet
-  name: production
-  api_key:
-    secure: MJcgOa5NrhHuW69wVB2YH1XuSuUSSW3wN2SjltVrImJDjTkEUYk2lJCjbCvwMgf
-  on:
-    branch: master
-    appveyor_repo_tag: true
-deploy:
   provider: NuGet
   server:                  # remove to push to NuGet.org
   api_key:
