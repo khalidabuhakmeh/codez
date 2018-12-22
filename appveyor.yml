@@ -1,0 +1,28 @@
+image: Visual Studio 2017
+version: '{build}'
+pull_requests:
+  do_not_increment_build_number: true
+branches:
+  only:
+  - master
+nuget:
+  disable_publish_on_pr: true
+build_script:
+- ps: dotnet --info
+# Run dotnet
+- ps: dotnet restore
+- ps: dotnet build
+- ps: dotnet test
+- ps: dotnet pack -c Release -o .\artifacts --version-suffix=$revision
+test: off
+artifacts:
+- path: .\artifacts\**\*.nupkg
+  name: NuGet
+deploy:
+- provider: NuGet
+  name: production
+  api_key:
+    secure: MJcgOa5NrhHuW69wVB2YH1XuSuUSSW3wN2SjltVrImJDjTkEUYk2lJCjbCvwMgf
+  on:
+    branch: master
+    appveyor_repo_tag: true
