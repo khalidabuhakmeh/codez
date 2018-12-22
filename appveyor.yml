@@ -13,10 +13,10 @@ build_script:
 - ps: dotnet restore
 - ps: dotnet build
 - ps: dotnet test
-- ps: dotnet pack -c Release -o  $appveyor_build_folder\artifacts --version-suffix=$revision
+- ps: dotnet pack -c Release --version-suffix=$revision
 test: off
 artifacts:
-- path: .\artifacts\**\*.nupkg
+- path: *.nupkg
   name: NuGet
 deploy:
 - provider: NuGet
