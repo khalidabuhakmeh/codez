@@ -1,6 +1,6 @@
-# codez
+# ![codez logo](codez.png)
 
-![codez logo](codez.png)
+## Codez 
 
 Codez is a library designed to help ease the process of generating codes for your end users that can be helpful for confirmation numbers, reservation systems, error codes, and more.
 
