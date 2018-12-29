@@ -1,6 +1,4 @@
-using System.Diagnostics.Tracing;
-
-namespace Codez
+namespace Codez.Generators
 {
     public class CodeGeneratorResult
     {

@@ -16,9 +16,9 @@ namespace Codez.Randomizers
             this.random = new Random(seed);
         }
 
-        public async ValueTask<int> NextAsync(int size)
+        public ValueTask<int> NextAsync(int size)
         {
-            return random.Next(0, size - 1);
+            return new ValueTask<int>(random.Next(0, size - 1));
         }
     }
 }

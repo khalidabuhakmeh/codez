@@ -4,9 +4,9 @@ namespace Codez.Uniques
 {
     public class NoUniqueness : IUniqueness
     {
-        public async ValueTask<bool> IsUniqueAsync(string value)
+        public ValueTask<bool> IsUniqueAsync(string value)
         {
-            return true;
+            return new ValueTask<bool>(true);
         }
     }
 }

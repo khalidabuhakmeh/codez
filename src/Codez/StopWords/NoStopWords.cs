@@ -4,9 +4,9 @@ namespace Codez.StopWords
 {
     public class NoStopWords : IStopWords
     {
-        public async ValueTask<bool> IsAllowedAsync(string value)
+        public ValueTask<bool> IsAllowedAsync(string value)
         {
-            return true;
+            return new ValueTask<bool>(true);
         }
     }
 }

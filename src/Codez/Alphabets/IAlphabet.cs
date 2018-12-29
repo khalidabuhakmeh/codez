@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Codez.Alphabets
 {
@@ -7,5 +6,6 @@ namespace Codez.Alphabets
     {
         char Get(int index);
         int Count { get; }
+        IReadOnlyList<char> Characters { get; }
     }
 }

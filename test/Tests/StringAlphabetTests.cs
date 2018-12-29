@@ -1,5 +1,4 @@
 using System;
-using Codez;
 using Codez.Alphabets;
 using Xunit;
 

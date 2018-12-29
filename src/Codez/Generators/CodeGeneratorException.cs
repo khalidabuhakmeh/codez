@@ -1,7 +1,6 @@
 using System;
-using System.Runtime.Serialization;
 
-namespace Codez
+namespace Codez.Generators
 {
     public class CodeGeneratorException : Exception
     {
