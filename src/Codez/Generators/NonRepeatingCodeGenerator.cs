@@ -1,17 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-
 using Codez.Alphabets;
 using Codez.Randomizers;
 using Codez.StopWords;
 using Codez.Transformers;
 using Codez.Uniques;
 
-namespace Codez
+namespace Codez.Generators
 {
-    public class NonrepeatingCodeGenerator : CodeGeneratorBase, ICodeGenerator
+    public class NonRepeatingCodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
-        public NonrepeatingCodeGenerator(CodeGeneratorOptions options = null,
+        public NonRepeatingCodeGenerator(CodeGeneratorOptions options = null,
                              IAlphabet alphabet = null,
                              IRandomizer randomizer = null,
                              IUniqueness uniqueness = null,

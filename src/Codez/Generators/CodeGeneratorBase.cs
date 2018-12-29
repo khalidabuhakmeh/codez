@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Codez.Alphabets;
+using Codez.Listeners;
 using Codez.Randomizers;
 using Codez.StopWords;
 using Codez.Transformers;
 using Codez.Uniques;
 
-namespace Codez
+namespace Codez.Generators
 {
     public abstract class CodeGeneratorBase
     {

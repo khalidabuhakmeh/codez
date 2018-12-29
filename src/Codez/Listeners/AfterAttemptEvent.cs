@@ -1,13 +1,7 @@
-using System.Threading.Tasks;
+using Codez.Generators;
 
-namespace Codez
+namespace Codez.Listeners
 {
-    public interface IListener
-    {
-        Task OnBeforeAttempt(BeforeAttemptEvent @event);
-        Task OnAfterAttempt(AfterAttemptEvent @event);
-    }
-
     public class AfterAttemptEvent
     {
         public AfterAttemptEvent(CodeGeneratorResult result)
@@ -22,15 +16,5 @@ namespace Codez
         }
 
         public CodeGeneratorResult Result { get; }
-    }
-
-    public class BeforeAttemptEvent
-    {
-        public BeforeAttemptEvent(int attempt)
-        {
-            Attempt = attempt;
-        }
-        
-        public int Attempt { get; }
     }
 }

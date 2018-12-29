@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Codez
+namespace Codez.Generators
 {
     public interface ICodeGenerator
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Codez
+namespace Codez.Generators
 {
     public class CodeGeneratorException : Exception
     {

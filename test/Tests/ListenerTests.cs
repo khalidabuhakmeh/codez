@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Codez;
 using Codez.Alphabets;
+using Codez.Generators;
+using Codez.Listeners;
 using Xunit;
 
 namespace Tests
@@ -11,7 +13,7 @@ namespace Tests
         public async Task Can_listen_for_attempts()
         {
             var alphabet = new CountingAlphabet();
-            var generator = new CodeGenerator(alphabet: alphabet);
+            var generator = new DefaultCodeGenerator(alphabet: alphabet);
             
             Assert.Equal(0, alphabet.Attempts);
 

@@ -2,6 +2,7 @@
 
 using Codez;
 using Codez.Alphabets;
+using Codez.Generators;
 using Codez.Randomizers;
 using Codez.StopWords;
 using Codez.Transformers;

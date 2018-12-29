@@ -2,13 +2,13 @@
 
 using Codez;
 using Codez.Alphabets;
-
+using Codez.Generators;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Tests
 {
-    public class NonrepeatingCodeGeneratorTests : CodeGeneratorTestsBase<NonrepeatingCodeGenerator>
+    public class NonrepeatingCodeGeneratorTests : CodeGeneratorTestsBase<NonRepeatingCodeGenerator>
     {
         public NonrepeatingCodeGeneratorTests(ITestOutputHelper output) 
             : base(output)
@@ -22,7 +22,7 @@ namespace Tests
             var alphabet = new AsciiAlphabet();
             var length = alphabet.Count + 1;
 
-            var generator = _c.CreateGenerator<NonrepeatingCodeGenerator>(alphabet: alphabet);
+            var generator = _c.CreateGenerator<NonRepeatingCodeGenerator>(alphabet: alphabet);
 
             var result = await generator.TryGenerateAsync(length);
 

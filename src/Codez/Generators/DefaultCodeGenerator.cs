@@ -1,20 +1,22 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Codez.Alphabets;
+using Codez.Listeners;
 using Codez.Randomizers;
 using Codez.StopWords;
 using Codez.Transformers;
 using Codez.Uniques;
 
-namespace Codez
+namespace Codez.Generators
 {
-    public class CodeGenerator : CodeGeneratorBase, ICodeGenerator
+    /// <summary>
+    /// Default Code Generator
+    /// </summary>
+    public class DefaultCodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
         private readonly StringBuilder sb = new StringBuilder();
 
-        public CodeGenerator(CodeGeneratorOptions options = null,
+        public DefaultCodeGenerator(CodeGeneratorOptions options = null,
                                 IAlphabet alphabet = null ,
                                 IRandomizer randomizer = null,
                                 IUniqueness uniqueness = null, 

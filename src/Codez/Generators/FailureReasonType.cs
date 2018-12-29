@@ -1,4 +1,4 @@
-namespace Codez
+namespace Codez.Generators
 {
     public enum FailureReasonType
     {
