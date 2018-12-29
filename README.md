@@ -1,6 +1,6 @@
 # ![codez logo](codez.png)
 
-## Codez 
+## Codez
 
 Codez is a library designed to help ease the process of generating codes for your end users that can be helpful for confirmation numbers, reservation systems, error codes, and more.
 
@@ -8,9 +8,9 @@ Codez is a library designed to help ease the process of generating codes for you
 
 > dotnet add package Codez
 
-## CodeGenerator
+## Code Generators (ICodeGenerator)
 
-The core of the library is the `CodeGenerator` class, which has two methods: `GenerateAsync` and `TryGenerateAsync`. The `CodeGenerator` class is made up of several dependencies that can change the behavior of the generate methods:
+The core of the library is the `ICodeGenerator` interface, which has two methods: `GenerateAsync` and `TryGenerateAsync`. You can also implement your own code generator by inheriting from `CodeGeneratorBase`. The `CodeGeneratorBase` class is made up of several dependencies that can change the behavior of the generate methods:
 
 - Alphabet (`IAlphabet`)
 - Randomizer (`IRandomizer`)
@@ -18,8 +18,9 @@ The core of the library is the `CodeGenerator` class, which has two methods: `Ge
 - Stop Words (`IStopWords`)
 - Options (`CodeGeneratorOptions`)
 - Transformers (`ITransformer`)
+- Listeners (`IListener`)
 
-Each dependency is explained in detail below. Codez also comes with some defaults out of the box if you don't want to customize anything.
+Each dependency is explained in detail below. If you don't want to customize anything, Codez also comes with some generators and dependencies out of the box. Some generators in the Codez package are `CodeGenerator` and `NonRepeatingCodeGenerator`.
 
 ### GenerateAsync
 
@@ -78,9 +79,16 @@ The transformer (`ITransfomer`) interface allows you to take a uniquely generate
 
 There is a sample in which this libary is used to [generate unique container names](https://github.com/khalidabuhakmeh/codez/blob/master/test/Tests/TransformerTests.cs).
 
+### IListener
+
+The `IListener` interface can be implemented on any of the dependencies of a code generator. In `CodeGeneratorBase` all dependencies that implement the interface will will be called twice: `OnBeforeAttempt` and `OnAfterAttempt`. This gives you an oppurtunity to hook into the attempt process.
+
 ### Options
 
 Options allow you to alter the behavior of the code generation:
 
 - Retry Limit (default of 5): Number of iterations to attempt generation
 
+## Contributors
+
+- [Tim VanFosson](https://github.com/tvanfosson)

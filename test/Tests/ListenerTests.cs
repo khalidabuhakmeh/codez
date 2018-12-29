@@ -13,7 +13,7 @@ namespace Tests
         public async Task Can_listen_for_attempts()
         {
             var alphabet = new CountingAlphabet();
-            var generator = new DefaultCodeGenerator(alphabet: alphabet);
+            var generator = new CodeGenerator(alphabet: alphabet);
             
             Assert.Equal(0, alphabet.Attempts);
 

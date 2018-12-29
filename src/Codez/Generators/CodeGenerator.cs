@@ -12,11 +12,11 @@ namespace Codez.Generators
     /// <summary>
     /// Default Code Generator
     /// </summary>
-    public class DefaultCodeGenerator : CodeGeneratorBase, ICodeGenerator
+    public class CodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
         private readonly StringBuilder sb = new StringBuilder();
 
-        public DefaultCodeGenerator(CodeGeneratorOptions options = null,
+        public CodeGenerator(CodeGeneratorOptions options = null,
                                 IAlphabet alphabet = null ,
                                 IRandomizer randomizer = null,
                                 IUniqueness uniqueness = null, 

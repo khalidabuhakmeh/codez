@@ -21,7 +21,7 @@ namespace Tests
         [Fact]
         public async Task Can_generate_and_transform_to_container_names()
         {
-            var generator = new DefaultCodeGenerator(
+            var generator = new CodeGenerator(
                 alphabet: new StringAlphabet("0123456789"),
                 transformer: new ContainerNamesTransformer()
             );
@@ -37,7 +37,7 @@ namespace Tests
         [Fact]
         public async Task Can_fail_to_transform()
         {
-            var generator = new DefaultCodeGenerator(
+            var generator = new CodeGenerator(
                 alphabet: new StringAlphabet("0123456789"),
                 transformer: new ContainerNamesTransformer()
             );
