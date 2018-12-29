@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace Tests
 {
-    public class NonrepeatingCodeGeneratorTests : BaseCodeGeneratorTests<NonrepeatingCodeGenerator>
+    public class NonrepeatingCodeGeneratorTests : CodeGeneratorTestsBase<NonrepeatingCodeGenerator>
     {
         public NonrepeatingCodeGeneratorTests(ITestOutputHelper output) 
             : base(output)

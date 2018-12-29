@@ -13,12 +13,12 @@ using Xunit.Abstractions;
 
 namespace Tests
 {
-    public abstract class BaseCodeGeneratorTests<T> where T: ICodeGenerator
+    public abstract class CodeGeneratorTestsBase<T> where T: ICodeGenerator
     {
         private readonly ITestOutputHelper output;
         private readonly CodeGeneratorTestContext _c = new CodeGeneratorTestContext();
 
-        protected BaseCodeGeneratorTests(ITestOutputHelper output)
+        protected CodeGeneratorTestsBase(ITestOutputHelper output)
         {
             this.output = output;
         }

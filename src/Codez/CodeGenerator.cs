@@ -10,16 +10,8 @@ using Codez.Uniques;
 
 namespace Codez
 {
-    public class CodeGenerator : ICodeGenerator
+    public class CodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
-        private readonly ITransformer transformer;
-        private readonly CodeGeneratorOptions options;
-        private readonly IAlphabet alphabet;
-        private readonly IRandomizer randomizer;
-        private readonly IUniqueness uniqueness;
-        private readonly IStopWords stopWords;
-        private readonly IReadOnlyList<IListener> listeners;
-
         public CodeGenerator(
             CodeGeneratorOptions options = null,
             IAlphabet alphabet = null ,
@@ -27,28 +19,11 @@ namespace Codez
             IUniqueness uniqueness = null, 
             IStopWords stopWords = null,
             ITransformer transformer = null
-        )
+        ) : base(options, alphabet, randomizer, uniqueness, stopWords, transformer)
         {
-            this.transformer = transformer;
-            this.options = options ?? new CodeGeneratorOptions();
-            this.alphabet = alphabet ?? new AsciiAlphabet();
-            this.randomizer = randomizer ?? new RandomRandomizer();
-            this.uniqueness = uniqueness ?? new NoUniqueness();
-            this.stopWords = stopWords ?? new NoStopWords();
-
-            listeners = new object[]
-                {
-                    this.alphabet,
-                    this.randomizer,
-                    this.uniqueness,
-                    this.stopWords
-                }
-                .Where(x => x is IListener)
-                .Cast<IListener>()
-                .ToList();
         }
 
-        public async ValueTask<string> GenerateAsync(int length)
+        public override async ValueTask<string> GenerateAsync(int length)
         {
             var result = await TryGenerateAsync(length);
 
@@ -58,7 +33,7 @@ namespace Codez
             throw new CodeGeneratorException(result);
         }
 
-        public async ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
+        public override async ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
         {
             var result = new CodeGeneratorResult();
             var sb = new StringBuilder();
@@ -115,18 +90,6 @@ namespace Codez
             }
 
             return result;
-        }
-
-        private async Task OnBeforeAttempt(BeforeAttemptEvent @event)
-        {
-            var onBefore = listeners.Select(e => e.OnBeforeAttempt(@event));
-            await Task.WhenAll(onBefore);
-        }
-        
-        private async Task OnAfterAttempt(AfterAttemptEvent @event)
-        {
-            var onBefore = listeners.Select(e => e.OnAfterAttempt(@event));
-            await Task.WhenAll(onBefore);
         }
     }
 }
