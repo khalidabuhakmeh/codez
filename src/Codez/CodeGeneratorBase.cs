@@ -58,15 +58,72 @@ namespace Codez
             throw new CodeGeneratorException(result);
         }
 
-        public abstract ValueTask<CodeGeneratorResult> TryGenerateAsync(int length);
+        public virtual async ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
+        {
+            CodeGeneratorResult result = null;
 
-        protected async Task OnBeforeAttempt(BeforeAttemptEvent @event)
+            for (var retry = 1; retry <= options.RetryLimit; retry++)
+            {
+                await OnBeforeAttempt(new BeforeAttemptEvent(retry));
+
+                var attempt = await GenerateAttemptAsync(length);
+
+                result = await ValidateAttempt(retry, attempt);
+
+                await OnAfterAttempt(new AfterAttemptEvent(result));
+
+                if (result.Success)
+                {
+                    return result;
+                }
+            }
+
+            return result ?? new CodeGeneratorResult();
+        }
+
+        protected async Task<CodeGeneratorResult> ValidateAttempt(int retry, string attempt)
+        {
+            var result = new CodeGeneratorResult
+            {
+                Reason = FailureReasonType.None,
+                Retries = retry,
+                Value = null
+            };
+
+            if (await stopWords.IsAllowedAsync(attempt))
+            {
+                if (await uniqueness.IsUniqueAsync(attempt))
+                {
+                    result.Value = attempt;
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Reason = FailureReasonType.Uniqueness;
+                }
+            }
+            else
+            {
+                result.Reason = FailureReasonType.Stopped;
+            }
+
+            if (transformer != null && result.Success)
+            {
+                result = await transformer.Transform(result);
+            }
+
+            return result;
+        }
+
+        protected abstract Task<string> GenerateAttemptAsync(int length);
+
+        protected virtual async Task OnBeforeAttempt(BeforeAttemptEvent @event)
         {
             var onBefore = listeners.Select(e => e.OnBeforeAttempt(@event));
             await Task.WhenAll(onBefore);
         }
 
-        protected async Task OnAfterAttempt(AfterAttemptEvent @event)
+        protected virtual async Task OnAfterAttempt(AfterAttemptEvent @event)
         {
             var onBefore = listeners.Select(e => e.OnAfterAttempt(@event));
             await Task.WhenAll(onBefore);

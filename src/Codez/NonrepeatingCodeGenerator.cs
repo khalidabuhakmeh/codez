@@ -5,7 +5,7 @@ namespace Codez
 {
     public class NonrepeatingCodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
-        public override ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
+        protected override async Task<string> GenerateAttemptAsync(int length)
         {
             throw new NotImplementedException();
         }

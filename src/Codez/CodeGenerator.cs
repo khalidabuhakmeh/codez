@@ -12,6 +12,7 @@ namespace Codez
 {
     public class CodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
+        private readonly StringBuilder sb = new StringBuilder();
         public CodeGenerator(
             CodeGeneratorOptions options = null,
             IAlphabet alphabet = null ,
@@ -23,63 +24,24 @@ namespace Codez
         {
         }
 
-        public override async ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
+        protected override async Task<string> GenerateAttemptAsync(int length)
         {
-            var result = new CodeGeneratorResult();
-            var sb = new StringBuilder();
-            
-            for (var retry = 1; retry <= options.RetryLimit; retry++)
+            for (var i = 0; i < length; i++)
             {
-                await OnBeforeAttempt(new BeforeAttemptEvent(retry));
+                var characterCount = alphabet.Count;
+                var index = await randomizer.NextAsync(characterCount);
+                var character = alphabet.Get(index);
 
-                for (var i = 0; i < length; i++)
-                {
-                    var characterCount = alphabet.Count;
-                    var index = await randomizer.NextAsync(characterCount);
-                    var character = alphabet.Get(index);
-                    
-                    sb.Append(character);
-                }
-
-                var attempt = sb.ToString();
-
-                result.Reason = FailureReasonType.None;
-                result.Retries = retry;
-                result.Value = null;
-               
-                if (await stopWords.IsAllowedAsync(attempt))
-                {
-                    if (await uniqueness.IsUniqueAsync(attempt))
-                    {
-                        result.Value = attempt;
-                        result.Success = true;
-                    }
-                    else
-                    {
-                        result.Reason = FailureReasonType.Uniqueness;                    
-                    }
-                }
-                else
-                {
-                    result.Reason = FailureReasonType.Stopped;
-                }
-                
-                if (transformer != null && result.Success)
-                {
-                    result = await transformer.Transform(result);
-                }
-                
-                await OnAfterAttempt(new AfterAttemptEvent(result));
-
-                if (result.Success)
-                {
-                    return result;
-                }
-
-                sb.Clear();
+                sb.Append(character);
             }
 
-            return result;
+            return sb.ToString();
+        }
+
+        protected override async Task OnAfterAttempt(AfterAttemptEvent @event)
+        {
+            sb.Clear();
+            await base.OnAfterAttempt(@event);
         }
     }
 }
