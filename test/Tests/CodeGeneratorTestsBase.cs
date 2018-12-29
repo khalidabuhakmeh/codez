@@ -111,10 +111,12 @@ namespace Tests
         {
             public char Get(int index)
             {
-                return 'A';
+                return Characters[0];
             }
 
-            public int Count => 1;
+            public int Count => Characters.Count;
+
+            public IReadOnlyList<char> Characters { get; } = new List<char> { 'A' };
         }
 
         public class Never : IUniqueness
