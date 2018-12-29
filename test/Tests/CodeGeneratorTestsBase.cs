@@ -15,7 +15,7 @@ namespace Tests
     public abstract class CodeGeneratorTestsBase<T> where T: ICodeGenerator
     {
         private readonly ITestOutputHelper output;
-        private readonly CodeGeneratorTestContext _c = new CodeGeneratorTestContext();
+        protected readonly CodeGeneratorTestContext _c = new CodeGeneratorTestContext();
 
         protected CodeGeneratorTestsBase(ITestOutputHelper output)
         {

@@ -9,7 +9,7 @@ using Codez.Uniques;
 
 namespace Tests
 {
-    internal class CodeGeneratorTestContext
+    public class CodeGeneratorTestContext
     {
         public ICodeGenerator CreateGenerator<T>(CodeGeneratorOptions options = null,
                                                  IAlphabet alphabet = null,
