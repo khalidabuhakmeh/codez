@@ -13,7 +13,7 @@ namespace Tests
     public class CodeGeneratorTests
     {
         private readonly ITestOutputHelper output;
-        private readonly CodeGenerator sut = new CodeGenerator();
+        private readonly CodeGeneratorTestContext _c = new CodeGeneratorTestContext();
 
         public CodeGeneratorTests(ITestOutputHelper output)
         {
@@ -21,10 +21,12 @@ namespace Tests
         }
         
         [Fact]
-        public async Task Can_generate_a_code()        
+        public async Task Can_generate_a_code()
         {
+            var generator = _c.CreateGenerator<CodeGenerator>();
+
             const int length = 5;
-            var result = await sut.GenerateAsync(length);
+            var result = await generator.GenerateAsync(length);
                         
             output.WriteLine(result);
             
@@ -35,14 +37,14 @@ namespace Tests
         [Fact]
         public async Task Can_hit_retry_limit_with_exception()
         {
-            var generator = new CodeGenerator(uniqueness: new Never());
+            var generator = _c.CreateGenerator<CodeGenerator>(uniqueness: new Never());
             await Assert.ThrowsAsync<CodeGeneratorException>(async() => await generator.GenerateAsync(1));
         }
         
         [Fact]
         public async Task Can_hit_retry_limit_with_boolean()
         {
-            var generator = new CodeGenerator(uniqueness: new Never());
+            var generator = _c.CreateGenerator<CodeGenerator>(uniqueness: new Never());
             var result = await generator.TryGenerateAsync(1);
             
             Assert.Null(result.Value);
@@ -52,7 +54,7 @@ namespace Tests
         [Fact]
         public async Task Can_hit_stop_word()
         {
-            var generator = new CodeGenerator(
+            var generator = _c.CreateGenerator<CodeGenerator>(
                 options: new CodeGeneratorOptions { RetryLimit = 1 },
                 alphabet: new Predictable(),
                 stopWords: new InMemoryStopWords("A"),
@@ -68,7 +70,7 @@ namespace Tests
         [Fact]
         public async Task Can_generate_character_unique_code()
         {
-            var generator = new CodeGenerator(
+            var generator = _c.CreateGenerator<CodeGenerator>(
                 alphabet: new ExclusiveStringAlphabet("abcdefg123456789")
             );
 
@@ -85,7 +87,7 @@ namespace Tests
         [Fact]
         public async Task Can_generate_no_repeating_codes()
         {
-            var generator = new CodeGenerator(
+            var generator = _c.CreateGenerator<CodeGenerator>(
                 new CodeGeneratorOptions { RetryLimit = int.MaxValue },
                 uniqueness: new InMemoryUniqueness(),
                 alphabet: new StringAlphabet("0123456789")
