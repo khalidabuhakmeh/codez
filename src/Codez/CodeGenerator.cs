@@ -23,16 +23,6 @@ namespace Codez
         {
         }
 
-        public override async ValueTask<string> GenerateAsync(int length)
-        {
-            var result = await TryGenerateAsync(length);
-
-            if (result.Success)
-                return result.Value;
-            
-            throw new CodeGeneratorException(result);
-        }
-
         public override async ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
         {
             var result = new CodeGeneratorResult();

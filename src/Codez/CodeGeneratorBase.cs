@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,7 +48,15 @@ namespace Codez
                         .ToList();
         }
 
-        public abstract ValueTask<string> GenerateAsync(int length);
+        public virtual async ValueTask<string> GenerateAsync(int length)
+        {
+            var result = await TryGenerateAsync(length);
+
+            if (result.Success)
+                return result.Value;
+
+            throw new CodeGeneratorException(result);
+        }
 
         public abstract ValueTask<CodeGeneratorResult> TryGenerateAsync(int length);
 

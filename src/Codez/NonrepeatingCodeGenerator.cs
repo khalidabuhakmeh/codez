@@ -3,14 +3,9 @@ using System.Threading.Tasks;
 
 namespace Codez
 {
-    public class NonrepeatingCodeGenerator : ICodeGenerator
+    public class NonrepeatingCodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
-        public ValueTask<string> GenerateAsync(int length)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
+        public override ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
         {
             throw new NotImplementedException();
         }
