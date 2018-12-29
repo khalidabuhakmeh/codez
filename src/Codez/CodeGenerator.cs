@@ -13,14 +13,15 @@ namespace Codez
     public class CodeGenerator : CodeGeneratorBase, ICodeGenerator
     {
         private readonly StringBuilder sb = new StringBuilder();
-        public CodeGenerator(
-            CodeGeneratorOptions options = null,
-            IAlphabet alphabet = null ,
-            IRandomizer randomizer = null,
-            IUniqueness uniqueness = null, 
-            IStopWords stopWords = null,
-            ITransformer transformer = null
-        ) : base(options, alphabet, randomizer, uniqueness, stopWords, transformer)
+
+        public CodeGenerator(CodeGeneratorOptions options = null,
+                                IAlphabet alphabet = null ,
+                                IRandomizer randomizer = null,
+                                IUniqueness uniqueness = null, 
+                                IStopWords stopWords = null,
+                                ITransformer transformer = null
+                            )
+            : base(options, alphabet, randomizer, uniqueness, stopWords, transformer)
         {
         }
 
