@@ -9,11 +9,4 @@ namespace Codez
 
         public int Retries { get; set; } = 0;
     }
-
-    public enum FailureReasonType
-    {
-        None,
-        Uniqueness,
-        Stopped
-    }
 }

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Codez.Alphabets;
 using Codez.Randomizers;
 using Codez.StopWords;
+using Codez.Transformers;
 using Codez.Uniques;
 
 namespace Codez
 {
     public class CodeGenerator
     {
+        private readonly ITransformer transformer;
         private readonly CodeGeneratorOptions options;
         private readonly IAlphabet alphabet;
         private readonly IRandomizer randomizer;
@@ -23,9 +25,11 @@ namespace Codez
             IAlphabet alphabet = null ,
             IRandomizer randomizer = null,
             IUniqueness uniqueness = null, 
-            IStopWords stopWords = null
+            IStopWords stopWords = null,
+            ITransformer transformer = null
         )
         {
+            this.transformer = transformer;
             this.options = options ?? new CodeGeneratorOptions();
             this.alphabet = alphabet ?? new AsciiAlphabet();
             this.randomizer = randomizer ?? new RandomRandomizer();
@@ -93,6 +97,11 @@ namespace Codez
                 else
                 {
                     result.Reason = FailureReasonType.Stopped;
+                }
+                
+                if (transformer != null && result.Success)
+                {
+                    result = await transformer.Transform(result);
                 }
                 
                 await OnAfterAttempt(new AfterAttemptEvent(result));

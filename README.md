@@ -1,10 +1,12 @@
-# codez
+# ![codez logo](codez.png)
+
+## Codez 
 
 Codez is a library designed to help ease the process of generating codes for your end users that can be helpful for confirmation numbers, reservation systems, error codes, and more.
 
 ## Getting Started
 
-> NuGet Coming Soon...
+> dotnet add package Codez
 
 ## CodeGenerator
 
@@ -15,6 +17,7 @@ The core of the library is the `CodeGenerator` class, which has two methods: `Ge
 - Uniqueness (`IUniqueness`)
 - Stop Words (`IStopWords`)
 - Options (`CodeGeneratorOptions`)
+- Transformers (`ITransformer`)
 
 Each dependency is explained in detail below. Codez also comes with some defaults out of the box if you don't want to customize anything.
 
@@ -68,6 +71,12 @@ The `IUniqueness` interface allows you to enforce global uniquness on the codes 
 ### Stop Words
 
 StopWords (`IStopWords`) provides a mechanism to filter out codes that may be deemed inappropriate or incorrect. You can live on the edge by using the default `NoStopWords`. If you like it boring, you can also use the `InMemoryStopWords` implementation and provide inappropriate words there, which uses and `IndexOf` implementation to find matches.
+
+### Transformers
+
+The transformer (`ITransfomer`) interface allows you to take a uniquely generated code and transform it into something else. The transfomer will only run when the result is a `Success`. **Note, The uniqueness of the code coming from a transfomer is not garaunteed.**
+
+There is a sample in which this libary is used to [generate unique container names](https://github.com/khalidabuhakmeh/codez/blob/master/test/Tests/TransformerTests.cs).
 
 ### Options
 
