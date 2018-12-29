@@ -22,6 +22,20 @@ namespace Codez
         {
         }
 
+        public override ValueTask<CodeGeneratorResult> TryGenerateAsync(int length)
+        {
+            if (alphabet.Count < length)
+            {
+                return new ValueTask<CodeGeneratorResult>(new CodeGeneratorResult
+                {
+                    Reason = FailureReasonType.RequestInvalid,
+                    Success = false
+                });
+            }
+
+            return base.TryGenerateAsync(length);
+        }
+
         protected override async Task<string> GenerateAttemptAsync(int length)
         {
             var shuffledAlphabet = await alphabet.Characters.ShuffleAsync(randomizer);

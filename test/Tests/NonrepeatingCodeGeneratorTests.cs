@@ -27,6 +27,7 @@ namespace Tests
             var result = await generator.TryGenerateAsync(length);
 
             Assert.False(result.Success);
+            Assert.Equal(FailureReasonType.RequestInvalid, result.Reason);
         }
     }
 }

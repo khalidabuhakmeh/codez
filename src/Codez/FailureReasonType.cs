@@ -5,6 +5,7 @@ namespace Codez
         None,
         Uniqueness,
         Stopped,
-        Transform
+        Transform,
+        RequestInvalid // e.g. requested a non-repeating code longer than the supplied alphabet
     }
 }
