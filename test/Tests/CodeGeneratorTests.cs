@@ -115,9 +115,9 @@ namespace Tests
 
         public class Never : IUniqueness
         {
-            public async ValueTask<bool> IsUniqueAsync(string value)
+            public ValueTask<bool> IsUniqueAsync(string value)
             {
-                return false;
+                return new ValueTask<bool>(false);
             }
         }
     }

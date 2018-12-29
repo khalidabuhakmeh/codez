@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Codez;
 using Codez.Alphabets;
@@ -27,9 +26,9 @@ namespace Tests
             );
 
             var result = await generator.GenerateAsync(2);
-            
+
             output.WriteLine(result);
-            
+
             Assert.NotNull(result);
             Assert.Contains("_", result);
         }
@@ -43,7 +42,7 @@ namespace Tests
             );
 
             var result = await generator.TryGenerateAsync(1);
-            
+
             Assert.False(result.Success);
             Assert.Equal(FailureReasonType.Transform, result.Reason);
         }
@@ -53,7 +52,7 @@ namespace Tests
             /// <summary>
             /// Space dudes
             /// </summary>
-            readonly Dictionary<char,string> names = new Dictionary<char,string>
+            private readonly Dictionary<char, string> names = new Dictionary<char, string>
             {
                 {'0', "Surfer"},
                 {'1', "Armstrong" },
@@ -66,10 +65,10 @@ namespace Tests
                 {'8', "Doctor"},
                 {'9', "Galactus" }
             };
-            
-            Dictionary<char,string> adjectives = new Dictionary<char, string>
+
+            private readonly Dictionary<char, string> adjectives = new Dictionary<char, string>
             {
-                { '0', "Funny"}, 
+                { '0', "Funny"},
                 { '1', "Sleepy"},
                 { '2', "Happy"},
                 { '3', "Boring"},
@@ -80,28 +79,28 @@ namespace Tests
                 { '8', "Smelly" },
                 { '9', "Scratchy" }
             };
-                       
-            public async ValueTask<CodeGeneratorResult> Transform(CodeGeneratorResult result)
+
+            public ValueTask<CodeGeneratorResult> Transform(CodeGeneratorResult result)
             {
                 if (result.Value.Length != 2)
-                    return new CodeGeneratorResult
+                    return new ValueTask<CodeGeneratorResult>(new CodeGeneratorResult
                     {
                         Value = null,
                         Reason = FailureReasonType.Transform,
                         Retries = result.Retries,
                         Success = false
-                    };
-                
+                    });
+
                 var adjective = adjectives[result.Value[0]];
                 var name = names[result.Value[1]];
-                
-                return new CodeGeneratorResult
+
+                return new ValueTask<CodeGeneratorResult>(new CodeGeneratorResult
                 {
                     Value = $"{adjective}_{name}",
                     Reason = result.Reason,
                     Retries = result.Retries,
                     Success = result.Success
-                };
+                });
             }
         }
     }
