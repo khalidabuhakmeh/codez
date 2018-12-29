@@ -7,9 +7,9 @@ namespace Codez.Uniques
     {
         private readonly HashSet<string> existing = new HashSet<string>();
 
-        public async ValueTask<bool> IsUniqueAsync(string value)
+        public ValueTask<bool> IsUniqueAsync(string value)
         {
-            return !existing.Contains(value);
+            return new ValueTask<bool>(!existing.Contains(value));
         }
 
         public Task OnBeforeAttempt(BeforeAttemptEvent @event)
