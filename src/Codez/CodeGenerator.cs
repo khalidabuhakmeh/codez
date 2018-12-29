@@ -10,7 +10,7 @@ using Codez.Uniques;
 
 namespace Codez
 {
-    public class CodeGenerator
+    public class CodeGenerator : ICodeGenerator
     {
         private readonly ITransformer transformer;
         private readonly CodeGeneratorOptions options;
