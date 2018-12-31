@@ -2,11 +2,8 @@
 
     <PropertyGroup>
         <Authors>Khalid Abuhakmeh</Authors>
-        <Product>Codez</Product>
         <LangVersion>latest</LangVersion>
         <NeutralLanguage>en-US</NeutralLanguage>
-        <Title>Codez</Title>
-        <PackageId>Codez</PackageId>
         <PackageTags>codes</PackageTags>
         <Description>A library to generate random codes</Description>
         <Copyright>Copyright © Khalid Abuhakmeh 2018</Copyright>
@@ -14,8 +11,6 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <RepositoryUrl>https://github.com/khalidabuhakmeh/codez</RepositoryUrl>
-        <RootNamespace>Codez</RootNamespace>
-        <AssemblyName>Codez</AssemblyName>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <IsTestProject>false</IsTestProject>
     </PropertyGroup>
