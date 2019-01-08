@@ -71,11 +71,11 @@ The `IUniqueness` interface allows you to enforce global uniquness on the codes 
 
 ### Stop Words
 
-StopWords (`IStopWords`) provides a mechanism to filter out codes that may be deemed inappropriate or incorrect. You can live on the edge by using the default `NoStopWords`. If you like it boring, you can also use the `InMemoryStopWords` implementation and provide inappropriate words there, which uses and `IndexOf` implementation to find matches.
+StopWords (`IStopWords`) provides a mechanism to filter out codes that may be deemed inappropriate or incorrect. You can live on the edge by using the default `NoStopWords`. If you like it boring, you can also use the `InMemoryStopWords` implementation and provide inappropriate words there, which uses an `IndexOf` implementation to find matches.
 
 ### Transformers
 
-The transformer (`ITransfomer`) interface allows you to take a uniquely generated code and transform it into something else. The transfomer will only run when the result is a `Success`. **Note, The uniqueness of the code coming from a transfomer is not garaunteed.**
+The transformer (`ITransfomer`) interface allows you to take a uniquely generated code and transform it into something else. The transfomer will only run when the result is a `Success`. **Note, The uniqueness of the code coming from a transfomer is not guaranteed.**
 
 There is a sample in which this libary is used to [generate unique container names](https://github.com/khalidabuhakmeh/codez/blob/master/test/Tests/TransformerTests.cs).
 
