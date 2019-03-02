@@ -17,7 +17,7 @@
 
 
     <ItemGroup>
-      <PackageReference Include="MinVer" Version="1.0.0-beta.4">
+      <PackageReference Include="MinVer" Version="1.0.0-rc.1">
           <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0-preview.18571.3" />
